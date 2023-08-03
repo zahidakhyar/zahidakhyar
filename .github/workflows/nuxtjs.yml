@@ -28,6 +28,9 @@ jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -46,9 +49,6 @@ jobs:
             echo "Unable to determine package manager"
             exit 1
           fi
-        with:
-          path:
-            app
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
@@ -66,7 +66,6 @@ jobs:
         uses: actions/cache@v3
         with:
           path: |
-            app
             dist
             .nuxt
           key: ${{ runner.os }}-nuxt-build-${{ hashFiles('dist') }}
@@ -74,14 +73,8 @@ jobs:
             ${{ runner.os }}-nuxt-build-
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
-        with:
-          path:
-            app
       - name: Static HTML export with Nuxt
         run: ${{ steps.detect-package-manager.outputs.manager }} run generate
-        with:
-          path:
-            app
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
         with:
