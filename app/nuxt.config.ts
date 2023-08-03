@@ -14,7 +14,7 @@ export default defineNuxtConfig({
         },
       ],
     },
-    baseURL: "/zahidakhyar/",
+    // baseURL: "/zahidakhyar/",
   },
 
   ssr: false,
@@ -24,6 +24,7 @@ export default defineNuxtConfig({
     "@nuxtjs/google-fonts",
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
+    "nuxt-icon",
   ],
 
   colorMode: {
