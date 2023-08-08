@@ -4,6 +4,7 @@ export default defineNuxtConfig({
 
   app: {
     head: {
+      title: "Zahid Akhyar",
       meta: [{ name: "description", content: "Zahid Akhyar Portofolio Site~" }],
       script: [
         {
@@ -16,6 +17,8 @@ export default defineNuxtConfig({
     },
     // baseURL: "/zahidakhyar/",
   },
+
+  css: ["~/assets/css/main.css"],
 
   ssr: false,
 
