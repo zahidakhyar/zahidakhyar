@@ -1,5 +1,5 @@
 <template>
   <Hero />
 
-  <Contents />
+  <Projects />
 </template>
