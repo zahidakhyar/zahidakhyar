@@ -15,7 +15,7 @@ export default defineNuxtConfig({
         },
       ],
     },
-    // baseURL: "/zahidakhyar/",
+    baseURL: process.env.NODE_ENV === "production" ? "/zahidakhyar/" : "",
   },
 
   css: ["~/assets/css/main.css"],
