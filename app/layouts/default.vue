@@ -1,7 +1,11 @@
 <template>
-  <CoreHeader />
+  <LazyCoreHeader />
 
-  <div class="pt-16">
+  <div class="pb-16" id="home"></div>
+
+  <div>
     <slot />
   </div>
+
+  <LazyCoreFooter />
 </template>

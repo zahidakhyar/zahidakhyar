@@ -22,15 +22,15 @@
           tabindex="0"
           class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
         >
-          <li><a>Homepage</a></li>
-          <li><a href="#title">Title</a></li>
+          <li><a href="#top">Home</a></li>
           <li><a href="#projects">Projects</a></li>
+          <li><a href="#skills">Skills</a></li>
         </ul>
       </div>
     </div>
 
     <div class="navbar-center">
-      <a class="btn btn-ghost normal-case text-xl">Hasuka</a>
+      <a class="btn btn-ghost normal-case text-xl">Zahid Akhyar</a>
     </div>
 
     <div class="navbar-end">

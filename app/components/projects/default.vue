@@ -29,7 +29,7 @@
 
       <div class="card-actions justify-end">
         <div
-          class="badge badge-outline badge-info"
+          class="badge badge-outline badge-error"
           v-for="tech in project.tech_stacks"
         >
           {{ tech }}

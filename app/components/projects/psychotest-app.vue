@@ -6,6 +6,18 @@
       personality.
     </p>
 
+    <p class="mb-2">
+      Feature that i made in this project is:
+      <ol class="list-disc ml-4">
+        <li>Auth</li>
+        <li>Logic for each test</li>
+        <li>Different result design</li>
+        <li>Admin Panel</li>
+        <li>Export to PDF</li>
+        <li>Dashboard for each test</li>
+      </ol>
+    </p>
+
     <p>
       Available test is: 
       <ul class="list-decimal ml-4">
