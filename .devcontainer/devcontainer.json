@@ -17,7 +17,8 @@
         "rvest.vs-code-prettier-eslint",
         "Vue.volar",
         "GitHub.copilot-chat",
-        "bradlc.vscode-tailwindcss"
+        "bradlc.vscode-tailwindcss",
+        "GitHub.vscode-github-actions"
       ]
     }
   }
