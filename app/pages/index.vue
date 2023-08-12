@@ -1,5 +1,7 @@
 <template>
-  <Hero />
+  <LazyHero />
 
-  <Projects />
+  <LazyProjects />
+
+  <LazySkills />
 </template>
