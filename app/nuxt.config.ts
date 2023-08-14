@@ -47,9 +47,9 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    "/animekompi": {
+    "/animekompi/**": {
       proxy: {
-        to: "https://animekompi.cam/",
+        to: "https://animekompi.cam/**",
       },
     },
   },

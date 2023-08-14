@@ -3,4 +3,5 @@ export type Anime = {
   episode: string;
   link: string;
   image: string;
+  description?: string;
 };

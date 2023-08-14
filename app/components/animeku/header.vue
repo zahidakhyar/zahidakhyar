@@ -29,7 +29,7 @@
       </div> -->
       <div class="form-control">
         <select class="select select-bordered w-full max-w-xs" v-model="source">
-          <option v-for="source in sourceList" :key="source" :value="source">
+          <option v-for="source in sourceList" :key="source" :value="source" :selected="source === 'animekompi'">
             {{ source }}
           </option>
         </select>
@@ -112,8 +112,12 @@ watch(
     if (value === "animekompi") {
       router.push("/animeku");
     } else {
-      router.push("/animeku/otakudesu");
+      router.push(`/animeku/${value}`);
     }
   }
 );
+
+onMounted(() => {
+  source.value = router.currentRoute.value.path.split("/")[2] || "animekompi";
+});
 </script>

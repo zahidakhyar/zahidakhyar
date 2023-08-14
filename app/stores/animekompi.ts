@@ -9,11 +9,13 @@ export const useAnimekompiStore = defineStore("animekompi", {
   }),
 
   actions: {
-    async init() {
-      return await $fetch(this.url);
+    async init(url?: string): Promise<string> {
+      const response = await fetch(url ? `${this.url}/${url}` : this.url);
+
+      return await response.text();
     },
 
-    async getMain() {
+    async getMain(): Promise<Anime[]> {
       const html = await this.init();
 
       const $ = cheerio.load(html as string);
@@ -21,23 +23,34 @@ export const useAnimekompiStore = defineStore("animekompi", {
       let anime: Anime[] = [];
 
       $(".bs").each((i, el) => {
-        // Remove h2 from .tt
         $(el).find(".tt h2").remove();
 
-        const title = $(el).find(".tt").text().trim();
-        const episode = $(el).find(".epx").text().trim();
         const link = $(el).find(".tip").attr("href");
         const image = $(el).find("img").attr("data-lazy-src");
 
         anime.push({
-          title,
-          episode,
+          title: $(el).find(".tt").text().trim(),
+          episode: $(el).find(".epx").text().trim(),
           link: link ? link?.split("/")[3] : "",
           image: image ? image : "",
         });
       });
 
       return anime;
+    },
+
+    async getDetail(url: string): Promise<Anime> {
+      const html = await this.init(url);
+
+      const $ = cheerio.load(html as string);
+
+      return {
+        title: $(".infox h2").text().trim(),
+        episode: "",
+        link: url,
+        image: "",
+        description: $(".desc").text().trim(),
+      };
     },
   },
 });
