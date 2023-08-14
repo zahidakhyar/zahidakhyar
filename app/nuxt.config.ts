@@ -28,11 +28,29 @@ export default defineNuxtConfig({
     "@nuxtjs/tailwindcss",
     "@nuxtjs/color-mode",
     "nuxt-icon",
+    [
+      "@pinia/nuxt",
+      {
+        autoImports: ["defineStore", "acceptHMRUpdate"],
+      },
+    ],
   ],
+
+  imports: {
+    dirs: ["stores"],
+  },
 
   colorMode: {
     preference: "system",
     dataValue: "theme",
     classSuffix: "",
+  },
+
+  routeRules: {
+    "/animekompi": {
+      proxy: {
+        to: "https://animekompi.cam/",
+      },
+    },
   },
 });
