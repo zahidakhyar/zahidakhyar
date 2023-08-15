@@ -28,8 +28,16 @@
         </ul>
       </div> -->
       <div class="form-control">
-        <select class="select select-bordered w-full max-w-xs" v-model="source">
-          <option v-for="source in sourceList" :key="source" :value="source" :selected="source === 'animekompi'">
+        <select
+          class="select select-bordered w-full max-w-xs capitalize"
+          v-model="source"
+        >
+          <option
+            v-for="source in sourceList"
+            :key="source"
+            :value="source"
+            :selected="source === 'animekompi'"
+          >
             {{ source }}
           </option>
         </select>
