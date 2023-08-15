@@ -26,11 +26,7 @@
         class="mx-4 max-w-[120px] py-4 opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0 lg:mx-6 xl:mx-8"
       >
         <img
-          :src="
-            process.env.NODE_ENV === 'production'
-              ? `/zahidakhyar/${skill.image}`
-              : skill.image
-          "
+          :src="skill.image"
           :alt="skill.name"
           @error="skill.image = 'https://placehold.co/125x125'"
           loading="lazy"
@@ -41,6 +37,8 @@
 </template>
 
 <script setup>
+const runtimeConfig = useRuntimeConfig();
+
 const skills = ref([
   {
     name: "Go",
@@ -108,4 +106,13 @@ const skills = ref([
     link: "https://gin-gonic.com/",
   },
 ]);
+
+skills.value.map((skill) => {
+  skill.image =
+    runtimeConfig.public.env === "production"
+      ? `/zahidakhyar/${skill.image}`
+      : skill.image;
+
+  return skill;
+});
 </script>

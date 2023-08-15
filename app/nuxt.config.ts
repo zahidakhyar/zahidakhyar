@@ -11,8 +11,8 @@ export default defineNuxtConfig({
           hid: "NewRelic",
           src:
             process.env.NODE_ENV === "production"
-              ? "/zahidakhyar"
-              : "" + "/newrelic.js",
+              ? "/zahidakhyar/newrelic.js"
+              : "/newrelic.js",
           defer: true,
           type: "text/javascript",
         },
@@ -54,6 +54,12 @@ export default defineNuxtConfig({
       proxy: {
         to: "https://animekompi.cam/**",
       },
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      env: process.env.NODE_ENV,
     },
   },
 });
