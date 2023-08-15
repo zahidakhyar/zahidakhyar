@@ -25,8 +25,7 @@
         target="_blank"
         class="mx-4 max-w-[120px] py-4 opacity-60 grayscale transition duration-500 hover:opacity-100 hover:grayscale-0 lg:mx-6 xl:mx-8"
       >
-        <nuxt-img
-          sizes="sm:100vw md:50vw lg:400px"
+        <img
           :src="skill.image"
           :alt="skill.name"
           @error="skill.image = 'https://placehold.co/125x125'"
