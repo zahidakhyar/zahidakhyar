@@ -1,5 +1,5 @@
 <template>
-  <div class="navbar bg-base-100 fixed z-50">
+  <div class="navbar bg-base-100 fixed z-50 shadow-lg">
     <div class="navbar-start">
       <!-- <div class="dropdown">
         <label tabindex="0" class="btn btn-ghost btn-circle">

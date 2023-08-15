@@ -1,9 +1,12 @@
 export type Anime = {
   title: string;
-  episode: string;
+  episode?: string;
   url: string;
   image: string;
   description?: string;
+  is_hot?: boolean;
+  type?: string;
+  translation?: string;
   downloadLinks?: DownloadLink[];
 };
 

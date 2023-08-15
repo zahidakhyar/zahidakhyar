@@ -4,30 +4,53 @@
       <TransitionGroup
         name="fade"
         tag="a"
-        class="grid xl:grid-cols-6 gap-4 m-auto"
+        class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-7 gap-8 m-auto"
         v-if="animes.length > 0"
       >
         <NuxtLink
-          class="card card-compact bg-base-100 shadow-xl"
+          class="card card-compact card-bordered border-slate-500 hover:border-primary focus-visible:outline-offset-0 focus-visible:border-0 bg-base-100 shadow-xl hover:shadow-primary focus:shadow-primary"
           v-for="anime in animes"
           :to="`/animeku/animekompi/${anime.url}`"
+          :key="anime.url"
         >
-          <figure>
-            <nuxt-img
-              class="rounded-t-lg"
-              :src="anime.image"
-              width="100%"
-              :alt="anime.title"
+          <figure class="indicator w-auto">
+            <Icon
+              v-if="anime.is_hot"
+              name="solar:fire-bold-duotone"
+              class="indicator-item indicator-start badge badge-error left-8 top-5"
             />
+
+            <span
+              class="indicator-item badge badge-warning text-sm right-8 top-5 font-semibold"
+              v-if="anime.translation"
+            >
+              {{ anime.translation }}
+            </span>
+
+            <nuxt-img :src="anime.image" width="100%" :alt="anime.title" />
           </figure>
 
           <div class="card-body">
-            <h5 class="">
+            <h5>
               {{ anime.title }}
             </h5>
-
-            <span class="text-sm text-slate-500 mb-auto">
+          </div>
+          <div class="card-actions px-4 pb-2 grid grid-flow-col-dense">
+            <span class="text-sm text-slate-500">
               {{ anime.episode }}
+            </span>
+
+            <span
+              :class="{
+                'text-sm text-slate-500 text-right': true,
+                'text-info': anime.type === 'TV',
+                'text-warning': anime.type === 'Live Action' || anime.type === 'Movie',
+                'text-error': anime.type === 'ONA' || anime.type === 'OVA',
+                'text-accent': anime.type === 'Special',
+              }"
+              v-if="anime.type"
+            >
+              {{ anime.type }}
             </span>
           </div>
         </NuxtLink>
@@ -57,9 +80,10 @@ const animes = ref([] as Anime[]);
 const loading = ref(true);
 const store = useAnimekompiStore();
 const page = ref(1);
+const hasNextPage = ref(true);
 
 onMounted(async () => {
-  animes.value = await store.getMain();
+  [animes.value, hasNextPage.value] = await store.getMain();
   loading.value = false;
   window.onscroll = onScroll;
 });
@@ -70,10 +94,12 @@ const onScroll = async () => {
   const scrollTop = document.documentElement.scrollTop;
   const clientHeight = document.documentElement.clientHeight;
 
-  if (scrollTop + clientHeight >= scrollHeight) {
+  if (scrollTop + clientHeight >= scrollHeight && hasNextPage.value) {
     loading.value = true;
 
-    const data = await store.getMain(++page.value);
+    let data: Anime[] = [];
+
+    [data, hasNextPage.value] = await store.getMain(++page.value);
 
     animes.value = [...animes.value, ...data];
 

@@ -9,20 +9,18 @@ export const useAnimekompiStore = defineStore("animekompi", {
   }),
 
   actions: {
-    async init(url?: string): Promise<string> {
-      const response = await fetch(url ? `${this.url}/${url}` : this.url);
-
-      return await response.text();
+    async init(url?: string) {
+      return await fetch(url ? `${this.url}/${url}` : this.url);
     },
 
-    async getMain(page?: number): Promise<Anime[]> {
+    async getMain(page?: number): Promise<[Anime[], boolean]> {
       const html = await this.init(page ? `page/${page}` : "");
 
-      const $ = cheerio.load(html as string);
+      const $ = cheerio.load(await html.text());
 
       let anime: Anime[] = [];
 
-      $(".bs").each((i, el) => {
+      $(".excstf .bs").each((i, el) => {
         $(el).find(".tt h2").remove();
 
         const url = $(el).find(".tip").attr("href");
@@ -33,16 +31,21 @@ export const useAnimekompiStore = defineStore("animekompi", {
           episode: $(el).find(".epx").text().trim(),
           url: url ? url?.split("/")[3] : "",
           image: image ? image : "",
+          is_hot: $(el).find(".hotbadge").length > 0,
+          translation: $(el).find(".sb").text().trim(),
+          type: $(el).find(".typez").text().trim(),
         });
       });
 
-      return anime;
+      const hasNextPage = $(".r").length > 0;
+
+      return [anime, hasNextPage];
     },
 
     async getDetail(url: string): Promise<Anime> {
       const html = await this.init(url);
 
-      const $ = cheerio.load(html as string);
+      const $ = cheerio.load(await html.text());
 
       const image = $(".thumb img").attr("data-lazy-src");
 
@@ -79,7 +82,7 @@ export const useAnimekompiStore = defineStore("animekompi", {
       });
 
       return {
-        title: $(".infox h2").text().trim(),
+        title: $(".entry-title").text().trim(),
         episode: "",
         url: url,
         image: image ? image : "",
