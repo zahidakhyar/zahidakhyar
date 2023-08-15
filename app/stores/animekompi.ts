@@ -5,7 +5,7 @@ import { Anime, DownloadLink } from "types";
 
 export const useAnimekompiStore = defineStore("animekompi", {
   state: () => ({
-    url: "/animekompi",
+    url: process.env.NODE_ENV === "production" ? "/animekompi" : "https://animekompi.cam",
   }),
 
   actions: {

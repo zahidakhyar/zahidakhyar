@@ -9,7 +9,10 @@ export default defineNuxtConfig({
       script: [
         {
           hid: "NewRelic",
-          src: "/newrelic.js",
+          src:
+            process.env.NODE_ENV === "production"
+              ? "/zahidakhyar"
+              : "" + "/newrelic.js",
           defer: true,
           type: "text/javascript",
         },

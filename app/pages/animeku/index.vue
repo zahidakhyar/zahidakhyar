@@ -68,10 +68,6 @@
 <script lang="ts" setup>
 import { Anime } from "@/types";
 
-useHead({
-  title: "Animeku",
-});
-
 definePageMeta({
   layout: false,
 });
