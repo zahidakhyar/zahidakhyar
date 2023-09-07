@@ -6,17 +6,21 @@ import { Anime, DownloadLink } from "types";
 export const useAnimekompiStore = defineStore("animekompi", {
   state: () => ({
     url: process.env.NODE_ENV === "production" ? "https://animekompi.cam" : "/animekompi",
+    source: "animekompi",
+    html: "",
   }),
 
   actions: {
     async init(url?: string) {
-      return await fetch(url ? `${this.url}/${url}` : this.url);
+      const html = await fetch(url ? `${this.url}/${url}` : this.url);
+
+      this.html = await html.text();
     },
 
     async getMain(page?: number): Promise<[Anime[], boolean]> {
-      const html = await this.init(page ? `page/${page}` : "");
+      await this.init(page ? `page/${page}` : "");
 
-      const $ = cheerio.load(await html.text());
+      const $ = cheerio.load(this.html);
 
       let anime: Anime[] = [];
 
@@ -34,6 +38,7 @@ export const useAnimekompiStore = defineStore("animekompi", {
           is_hot: $(el).find(".hotbadge").length > 0,
           translation: $(el).find(".sb").text().trim(),
           type: $(el).find(".typez").text().trim(),
+          source: this.source,
         });
       });
 
@@ -43,9 +48,9 @@ export const useAnimekompiStore = defineStore("animekompi", {
     },
 
     async getDetail(url: string): Promise<Anime> {
-      const html = await this.init(url);
+      await this.init(url);
 
-      const $ = cheerio.load(await html.text());
+      const $ = cheerio.load(this.html);
 
       const image = $(".thumb img").attr("data-lazy-src");
 
@@ -88,7 +93,33 @@ export const useAnimekompiStore = defineStore("animekompi", {
         image: image ? image : "",
         description: $(".desc").text().trim(),
         downloadLinks,
+        source: this.source,
       };
+    },
+
+    async getTopWeekly(): Promise<Anime[]> {
+      const $ = cheerio.load(this.html);
+
+      let anime: Anime[] = [];
+
+      $(".serieslist.pop.wpop.wpop-weekly ul li").each((i, el) => {
+        let url = $(el).find(".leftseries h4 a").attr("href");
+        if (url) {
+          const splitURL = url.split("/");
+          url = `${splitURL[splitURL.length - 3]}/${splitURL[splitURL.length - 2]}`;
+        }
+
+        const image = $(el).find("img").attr("data-lazy-src");
+
+        anime.push({
+          title: $(el).find(".leftseries h4").text().trim(),
+          url: url || "",
+          image: image ? image : "",
+          source: this.source,
+        });
+      });
+
+      return anime;
     },
   },
 });

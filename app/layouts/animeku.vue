@@ -1,13 +1,13 @@
 <template>
-  <LazyAnimekuHeader />
+  <div class="flex flex-col h-screen justify-between">
+    <LazyAnimekuHeader />
 
-  <div class="pb-16" id="home"></div>
+    <main class="mb-auto">
+      <slot />
+    </main>
 
-  <div>
-    <slot />
+    <LazyAnimekuFooter />
   </div>
-
-  <LazyAnimekuFooter />
 </template>
 
 <script lang="ts" setup>
