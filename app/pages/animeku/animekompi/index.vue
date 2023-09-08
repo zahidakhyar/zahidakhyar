@@ -1,7 +1,15 @@
 <template>
   <NuxtLayout name="animeku">
-    <div class="container mx-auto px-4 py-5">
-      <AnimekuLandingAnime :animes="animes" :loading="loading" />
+    <div class="mx-auto px-4 py-5">
+      <div class="grid lg:grid-flow-col-dense gap-5">
+        <AnimekuLandingAnime :animes="animes" :loading="loading"/>
+
+        <AnimekuLandingTopWeekly
+          :animes="animesWeekly"
+          v-if="!loadingInit"
+          class="bg-base-200"
+        />
+      </div>
     </div>
   </NuxtLayout>
 </template>
@@ -15,6 +23,7 @@ definePageMeta({
 const store = useAnimekompiStore();
 
 const loading = ref(true);
+const loadingInit = ref(true);
 const page = ref(1);
 const hasNextPage = ref(true);
 
@@ -26,6 +35,7 @@ onMounted(async () => {
   animesWeekly.value = await store.getTopWeekly();
 
   loading.value = false;
+  loadingInit.value = false;
   window.onscroll = onScroll;
 });
 

@@ -3,7 +3,7 @@
     <div class="container mx-auto px-4 py-5">
       <TransitionGroup
         name="fade"
-        tag="a"
+        tag="div"
         class="grid sm:grid-cols-2 md:grid-cols-4 gap-8 m-auto"
       >
         <NuxtLink
