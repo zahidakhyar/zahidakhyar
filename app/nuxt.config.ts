@@ -47,14 +47,6 @@ export default defineNuxtConfig({
     classSuffix: "",
   },
 
-  routeRules: {
-    "/animekompi/**": {
-      proxy: {
-        to: "https://animekompi.cam/**",
-      },
-    },
-  },
-
   runtimeConfig: {
     public: {
       env: process.env.NODE_ENV,
